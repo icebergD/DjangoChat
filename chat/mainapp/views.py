@@ -119,7 +119,7 @@ def send_message(request):
 def update_message(request):
 
 	if request.method == 'POST':
-		messageModel = Message.objects.all().order_by('created_at')
+		messageModel = Message.objects.all().order_by('-created_at')[0:100]
 		response = list()
 		for x in messageModel:
 			# user = User.objects.filter(id=x.owner)

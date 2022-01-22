@@ -16,9 +16,12 @@
         <style type="text/css">
             .chat-container {
                 height: 500px;
+                padding-left: 16px;
+                padding-bottom: 16px;
             }
             .chat-block{
-                width: 50%;
+                
+                max-width: 600px
             }
         </style>
     </head>
@@ -68,17 +71,17 @@
                 {% endif %}
 
                 <div class="">
-                    <div class="chat-container pb-3 border overflow-auto">
-               
+                    <div class="chat-container border overflow-auto">
+                        
                     </div>
-                    <input class="refresh-btn mt-2 container-fluid" name="refresh" type="button" value="refresh">
+                    <!-- <input class="refresh-btn mt-2 container-fluid" name="refresh" type="button" value="refresh"> -->
                     <div >
                         <form class="row mt-5" action="{% url 'send_message' %}" method="post">
-                            <div class="col-10">
+                            <div class="col-8 col-lg-10">
                                 <input class="container-fluid" name="message" type="text">
                             </div>
                             {% csrf_token %}
-                            <div class="col-2 ">
+                            <div class="col-4 col-lg-2">
                                 <input type="submit" class="container-fluid" value="send">
                             </div>
                         </form>
@@ -93,7 +96,8 @@
 <script type="text/javascript">
 
             $(document).ready(function(){
-                // $(".test").html("This is Hello World by JQuery");
+
+
                 function getCookie(name) {
                     var cookieValue = null;
                     if (document.cookie && document.cookie != '') {
@@ -123,14 +127,14 @@
                             $(".chat-container").html('');
                             var data = response.response;
 
-                            for (var i = 0; i < data.length; i++) {
-                                var chat_el = "<div class='pl-3 pt-3'><span class='text-black-50'>"+data[i]['username']+" </span>"+data[i]['message']+"</div>";
+                            for (var i = data.length-1; i >= 0; i--) {
+                                var chat_el = "<div class='pt-3'><span class='text-black-50'>"+data[i]['username']+" </span>"+data[i]['message']+"</div>";
                                
                                 $(".chat-container").append(chat_el);
                             };
                             
-                            var block = document.getElementById("block");
-                            $(".chat-container").scrollTop($(".chat-container").prop('scrollHeight'));
+                           
+                            // $(".chat-container").scrollTop($(".chat-container").prop('scrollHeight'));
                         },
                         // если ошибка, то
                         error: function (response) {
@@ -140,8 +144,13 @@
                     });
                     
                 }//конец updateMessages
+                function scrollDown(){
+                    $(".chat-container").scrollTop($(".chat-container").prop('scrollHeight'));
+                }
                 updateMessages();
-                $(".refresh-btn").click(updateMessages);
+                setTimeout(scrollDown,1000)
+                setInterval(updateMessages,1000,2000)
+                // $(".refresh-btn").click(updateMessages);
 
             });
 
