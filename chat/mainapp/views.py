@@ -83,6 +83,8 @@ def user_register(request):
             #         return HttpResponse('Disabled account')
             # else:
             #     return HttpResponse('Invalid register')
+		else:
+			context['form'] = form
 	else:
 		form = UserRegistrationForm()
 		context['form'] = form

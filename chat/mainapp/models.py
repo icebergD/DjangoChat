@@ -12,3 +12,4 @@ class Message(models.Model):
 
 	def __str__(self):
 		return 'Имя Пользователя: {} Дата создания сообщения: {}'.format(self.owner, self.created_at)
+
